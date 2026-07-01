@@ -1,0 +1,13 @@
+# Secrets
+broker/.env
+scripts/.env
+
+# Runtime data (populated on VPS)
+corescope/data/*.db
+corescope/data/*.db-*
+
+# Site has its own repo
+site/
+
+# macOS
+.DS_Store

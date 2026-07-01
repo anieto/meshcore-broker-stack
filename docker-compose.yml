@@ -1,0 +1,36 @@
+services:
+  broker:
+    build: ./broker
+    env_file: ./broker/.env
+    ports:
+      - "127.0.0.1:8883:8883"
+    volumes:
+      - broker-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"const n=require('net').createConnection(8883,'localhost');n.on('connect',()=>{n.destroy();process.exit(0)});n.on('error',()=>process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  corescope:
+    image: ghcr.io/kpa-clawbot/corescope:latest
+    depends_on:
+      - broker
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./corescope/data:/app/data
+      - ./corescope/config.json:/app/data/config.json:ro
+    environment:
+      - DISABLE_MOSQUITTO=true
+      - DISABLE_CADDY=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  broker-data:

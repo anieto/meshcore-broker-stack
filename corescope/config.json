@@ -1,0 +1,43 @@
+{
+  "mqttSources": [
+    {
+      "name": "texas-broker",
+      "broker": "wss://mqtt.meshtexas.net",
+      "username": "corescope",
+      "password": "CHANGE_ME_STRONG_PASSWORD",
+      "topics": ["meshcore/#"],
+      "iataFilter": ["SAT", "AUS", "HOU", "DAL", "ELP"]
+    }
+  ],
+  "defaultRegion": "AUS",
+  "mapDefaults": {
+    "center": [30.2672, -97.7431],
+    "zoom": 8
+  },
+  "map": {
+    "tiles": {
+      "darkDefault": "carto-voyager-dark",
+      "lightDefault": "carto-voyager"
+    }
+  },
+  "regions": {
+    "SAT": "San Antonio, TX",
+    "AUS": "Austin, TX",
+    "HOU": "Houston, TX",
+    "DAL": "Dallas, TX",
+    "ELP": "El Paso, TX"
+  },
+  "branding": {
+    "siteName": "MeshTexas",
+    "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
+    "logoUrl": "https://meshtexas.net/logo-wide.png"
+  },
+  "packetStore": {
+    "retentionHours": 48,
+    "maxMemoryMB": 512
+  },
+  "retention": {
+    "nodeDays": 14,
+    "packetDays": 60
+  }
+}
