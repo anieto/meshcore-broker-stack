@@ -347,3 +347,12 @@ if self-hosting), then subscribe to that topic in the
   in `broker/.env` and restart the broker.
 - `ALLOWED_REGIONS` in `broker/.env` (see Step 3) is what scopes the broker
   to your region — restart the broker after changing it for it to take effect.
+- Both services bind-mount the VPS's `/etc/localtime` (read-only) into the
+  container, so log timestamps match the VPS's own clock. Make sure the
+  VPS's system timezone is actually set to your region
+  (`timedatectl set-timezone <region>`) — otherwise cron schedules fire at
+  the wrong wall-clock time relative to what you expect. Don't add a `TZ=`
+  environment variable alongside this on Alpine-based images (both services
+  here are Alpine) — without the full `tzdata` package installed, an
+  unresolvable named `TZ` value silently overrides the correctly-mounted
+  `/etc/localtime` and falls back to UTC.

@@ -6,6 +6,7 @@ services:
       - "127.0.0.1:8883:8883"
     volumes:
       - broker-data:/data
+      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "node -e \"const n=require('net').createConnection(8883,'localhost');n.on('connect',()=>{n.destroy();process.exit(0)});n.on('error',()=>process.exit(1))\""]
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./corescope/data:/app/data
       - ./corescope/config.json:/app/data/config.json:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - DISABLE_MOSQUITTO=true
       - DISABLE_CADDY=true
