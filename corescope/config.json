@@ -6,7 +6,7 @@
       "username": "corescope",
       "password": "CHANGE_ME_STRONG_PASSWORD",
       "topics": ["meshcore/#"],
-      "iataFilter": ["SAT", "AUS", "HOU", "DAL", "ELP"]
+      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT"]
     }
   ],
   "defaultRegion": "AUS",
@@ -24,8 +24,15 @@
     "SAT": "San Antonio, TX",
     "AUS": "Austin, TX",
     "HOU": "Houston, TX",
-    "DAL": "Dallas, TX",
-    "ELP": "El Paso, TX"
+    "DFW": "Dallas-Fort Worth, TX",
+    "ELP": "El Paso, TX",
+    "ABI": "Abilene, TX",
+    "AMA": "Amarillo, TX",
+    "MFE": "McAllen, TX",
+    "SJT": "San Angelo, TX",
+    "TXK": "Texarkana, TX",
+    "CRP": "Corpus Christi, TX",
+    "ACT": "Waco, TX"
   },
   "branding": {
     "siteName": "MeshTexas",
