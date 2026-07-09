@@ -8,7 +8,7 @@ copy for any region, not just Texas.
 
 This exact setup runs live as MeshTexas, at
 [meshtexas.net](https://meshtexas.net) / [analyzer.meshtexas.net](https://analyzer.meshtexas.net) —
-worth a look for a concrete example of the end result. Everywhere below,
+an example of the end result. Everywhere below,
 `yourdomain.net` is a placeholder for whatever domain you're deploying to.
 
 - **MQTT broker** ([`michaelhart/meshcore-mqtt-broker`](https://github.com/michaelhart/meshcore-mqtt-broker))
