@@ -356,3 +356,20 @@ if self-hosting), then subscribe to that topic in the
   here are Alpine) — without the full `tzdata` package installed, an
   unresolvable named `TZ` value silently overrides the correctly-mounted
   `/etc/localtime` and falls back to UTC.
+
+## License
+
+This repo's own files (Dockerfile, docker-compose.yml, config, scripts, docs)
+are licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE) —
+free to use, modify, and self-host for any noncommercial purpose.
+
+This project builds on two separate open-source projects, each under their
+own license:
+- [`michaelhart/meshcore-mqtt-broker`](https://github.com/michaelhart/meshcore-mqtt-broker) — MIT License
+- [`Kpa-clawbot/CoreScope`](https://github.com/Kpa-clawbot/CoreScope) — GNU GPL v3.0
+
+Neither of those licenses is inherited by this repo: the broker image is
+built fresh from their own upstream source at build time (never vendored
+into this repo), and CoreScope runs as an unmodified prebuilt image
+configured entirely through this repo's own `config.json` — so all credit
+for those two projects goes to their respective authors.
