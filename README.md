@@ -114,6 +114,17 @@ nano corescope/config.json
 # update "branding" (siteName, tagline, logoUrl) to your own project's identity
 ```
 
+**Deployment risk, not just first-time setup**: since this repo is public, the
+tracked copy of `corescope/config.json` must keep the `CHANGE_ME_STRONG_PASSWORD`
+placeholder — it can never hold your real password. That means every time you
+edit this file later (e.g. adding a region) and copy it back to the VPS, you
+will silently overwrite the live, working password with the placeholder unless
+you re-apply it by hand afterward. Symptom if this happens: every device still
+publishes fine, but CoreScope's own subscriber connection fails auth and the
+map goes stale — check `docker compose logs broker` for `Invalid password`
+tied to the `corescope` username to confirm. Always diff the live `password`
+field on the VPS before and after deploying a new `config.json`.
+
 ## Step 4 — Build and start services
 
 ```bash
