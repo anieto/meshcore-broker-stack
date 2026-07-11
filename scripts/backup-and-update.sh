@@ -3,6 +3,11 @@
 # Backs up broker/analyzer state, then updates CoreScope and the broker to
 # their latest versions. Run by hand on the VPS, or from cron.
 #
+# If a `livemap` service is defined in docker-compose.yml (optional —
+# see livemap/.env.example), its own backup archive is swept into
+# BACKUP_DIR too, and it's updated/health-checked alongside the other
+# two. Deployments that don't run livemap skip this silently.
+#
 # Usage:
 #   ./backup-and-update.sh                # backup, then update both services
 #   ./backup-and-update.sh --backup-only  # just the backup step
@@ -30,6 +35,12 @@ cd "$PROJECT_DIR"
 . "$SCRIPT_DIR/notify.sh"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+
+# True if the named service exists in docker-compose.yml — lets the
+# optional livemap steps no-op cleanly on deployments that don't run it.
+service_defined() {
+  docker compose config --services 2>/dev/null | grep -qx "$1"
+}
 
 do_backup() {
   mkdir -p "$BACKUP_DIR"
@@ -65,6 +76,20 @@ do_backup() {
     notify "Backup failed" 5 "rotating_light,floppy_disk" \
       "corescope/config.json backup failed on $(hostname). Check backup log."
     exit 1
+  fi
+
+  if service_defined livemap; then
+    log "Backing up livemap state..."
+    # livemap writes its own timestamped .tar.gz archives to ./livemap/backup
+    # on its own interval (BACKUP_INTERVAL_SECONDS) — just grab the latest
+    # one rather than duplicating its backup logic here.
+    local latest_livemap_backup
+    latest_livemap_backup="$(ls -t livemap/backup/*.tar.gz 2>/dev/null | head -n1 || true)"
+    if [ -n "$latest_livemap_backup" ]; then
+      cp "$latest_livemap_backup" "$BACKUP_DIR/livemap-$TIMESTAMP.tar.gz"
+    else
+      log "NOTE: no livemap backup archive yet — fine if BACKUP_ENABLED was just turned on or livemap was just deployed"
+    fi
   fi
 
   log "Pruning backups older than $RETENTION_DAYS days..."
@@ -115,9 +140,22 @@ do_update() {
     exit 1
   fi
 
+  local updated="CoreScope and broker"
+  if service_defined livemap; then
+    log "Updating livemap..."
+    docker compose pull livemap
+    docker compose up -d livemap
+    if ! wait_for_healthy livemap; then
+      notify "Update needs attention" 5 "rotating_light,arrow_up" \
+        "livemap did not reach healthy after updating on $(hostname). CoreScope and broker were already updated — check the box."
+      exit 1
+    fi
+    updated="CoreScope, broker, and livemap"
+  fi
+
   log "Update complete"
   notify "Update complete" 3 "white_check_mark,arrow_up" \
-    "CoreScope and broker updated on $(hostname) — both healthy."
+    "$updated updated on $(hostname) — all healthy."
 }
 
 case "${1:-}" in

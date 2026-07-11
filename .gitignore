@@ -1,10 +1,13 @@
 # Secrets
 broker/.env
 scripts/.env
+livemap/.env
 
 # Runtime data (populated on VPS)
 corescope/data/*.db
 corescope/data/*.db-*
+livemap/data/
+livemap/backup/
 
 # Site has its own repo
 site/
