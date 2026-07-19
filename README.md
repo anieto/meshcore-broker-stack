@@ -368,6 +368,14 @@ if self-hosting), then subscribe to that topic in the
   unresolvable named `TZ` value silently overrides the correctly-mounted
   `/etc/localtime` and falls back to UTC.
 
+## AI disclosure
+
+It's mixed. I use AI a lot at work. Side projects are a way for me to keep my
+programming skills alive. This project contains a mix of manually written and
+AI generated (but manually reviewed) code. I used it more heavily in
+brainstorming ideas and for managing the GitHub deployment. Don't use this if
+you're a purist.
+
 ## License
 
 This repo's own files (Dockerfile, docker-compose.yml, config, scripts, docs)
