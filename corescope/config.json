@@ -2,7 +2,7 @@
   "mqttSources": [
     {
       "name": "texas-broker",
-      "broker": "wss://mqtt.meshtexas.net",
+      "broker": "wss://mqtt.meshtexas.org",
       "username": "corescope",
       "password": "CHANGE_ME_STRONG_PASSWORD",
       "topics": ["meshcore/#"],
@@ -37,7 +37,7 @@
   "branding": {
     "siteName": "MeshTexas",
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
-    "logoUrl": "https://meshtexas.net/logo-wide.png"
+    "logoUrl": "https://meshtexas.org/logo-wide.png"
   },
   "packetStore": {
     "retentionHours": 48,

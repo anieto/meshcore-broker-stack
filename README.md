@@ -7,7 +7,7 @@ the deployment guide — how it's put together, and how to stand up your own
 copy for any region, not just Texas.
 
 This exact setup runs live as MeshTexas, at
-[meshtexas.net](https://meshtexas.net) / [analyzer.meshtexas.net](https://analyzer.meshtexas.net) —
+[meshtexas.org](https://meshtexas.org) / [analyzer.meshtexas.org](https://analyzer.meshtexas.org) —
 an example of the end result. Everywhere below,
 `yourdomain.net` is a placeholder for whatever domain you're deploying to.
 
