@@ -37,7 +37,7 @@
   "branding": {
     "siteName": "MeshTexas",
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
-    "logoUrl": "https://meshtexas.org/logo-wide.png"
+    "logoUrl": "https://meshtexas.org/images/meshtexas-logo-wide.png"
   },
   "packetStore": {
     "retentionHours": 48,
