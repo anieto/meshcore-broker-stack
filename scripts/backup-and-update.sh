@@ -13,6 +13,11 @@
 #   ./backup-and-update.sh --backup-only  # just the backup step
 #   ./backup-and-update.sh --update-only  # skip backup, just update
 #
+# Also exports the meshtexas-repeaters D1 database (via a throwaway
+# `wrangler` Docker container, since this box has no Node install) into
+# BACKUP_DIR alongside the other backups. No-ops until scripts/.env has
+# CLOUDFLARE_API_TOKEN set — see scripts/.env.example.
+#
 # Env overrides:
 #   BACKUP_DIR       where backups are written (default: /opt/backups)
 #   RETENTION_DAYS   how long to keep backups (default: 7)
@@ -33,6 +38,13 @@ cd "$PROJECT_DIR"
 
 # ntfy notify() helper (no-op until NTFY_TOKEN is set in scripts/.env).
 . "$SCRIPT_DIR/notify.sh"
+
+# Deliberately not shell-sourcing .env (same reasoning as notify.sh) —
+# just pull out the one var this script needs.
+CLOUDFLARE_API_TOKEN=""
+if [ -f "$SCRIPT_DIR/.env" ]; then
+  CLOUDFLARE_API_TOKEN="$(sed -n 's/^CLOUDFLARE_API_TOKEN=//p' "$SCRIPT_DIR/.env" | tail -n1)"
+fi
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
@@ -90,6 +102,21 @@ do_backup() {
     else
       log "NOTE: no livemap backup archive yet — fine if BACKUP_ENABLED was just turned on or livemap was just deployed"
     fi
+  fi
+
+  log "Backing up meshtexas-repeaters D1 database..."
+  if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+    log "NOTE: CLOUDFLARE_API_TOKEN not set in scripts/.env — skipping D1 export"
+  elif ! docker run --rm \
+    -e CLOUDFLARE_API_TOKEN="$CLOUDFLARE_API_TOKEN" \
+    -e CLOUDFLARE_ACCOUNT_ID="e472a5fc5a46bc27f25d7fe343cd58e8" \
+    -v "$BACKUP_DIR:/backup" \
+    node:22-alpine \
+    npx --yes wrangler@4.112.0 d1 export meshtexas-repeaters --remote --output "/backup/meshtexas-repeaters-$TIMESTAMP.sql"; then
+    log "ERROR: meshtexas-repeaters D1 export failed"
+    notify "Backup failed" 5 "rotating_light,floppy_disk" \
+      "meshtexas-repeaters D1 export failed on $(hostname). Check backup log."
+    exit 1
   fi
 
   log "Pruning backups older than $RETENTION_DAYS days..."
