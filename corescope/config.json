@@ -6,7 +6,7 @@
       "username": "corescope",
       "password": "CHANGE_ME_STRONG_PASSWORD",
       "topics": ["meshcore/#"],
-      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "GGG"]
+      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "TYR"]
     }
   ],
   "defaultRegion": "AUS",
@@ -31,10 +31,11 @@
     "MFE": "McAllen, TX",
     "SJT": "San Angelo, TX",
     "TXK": "Texarkana, TX",
-    "GGG": "Longview-Tyler, TX",
+    "TYR": "Tyler-Longview, TX",
     "CRP": "Corpus Christi, TX",
     "ACT": "Waco, TX"
   },
+  "iataAliases": { "GGG": "TYR" },
   "branding": {
     "siteName": "MeshTexas",
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
