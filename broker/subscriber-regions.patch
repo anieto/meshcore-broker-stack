@@ -1,0 +1,43 @@
+diff --git a/src/server.ts b/src/server.ts
+index cde404b..ece6a8d 100644
+--- a/src/server.ts
++++ b/src/server.ts
+@@ -105,6 +105,23 @@ while (true) {
+   subscriberIndex++;
+ }
+ 
++// Optional per-subscriber region allowlist (MeshTexas):
++// SUBSCRIBER_REGIONS_<username>=AUS,SAT,... limits that subscriber to
++// meshcore/<region>/... topics in the list, whatever it subscribes to.
++// Subscribers without one receive every region, as before.
++const subscriberRegions = new Map<string, Set<string>>();
++for (const [key, value] of Object.entries(process.env)) {
++  if (!key.startsWith('SUBSCRIBER_REGIONS_') || !value) continue;
++  const username = key.slice('SUBSCRIBER_REGIONS_'.length);
++  if (!subscriberUsers.has(username)) {
++    console.warn(`[CONFIG] ${key} names an unknown subscriber, ignored`);
++    continue;
++  }
++  const regions = new Set(value.split(',').map(r => r.trim().toUpperCase()).filter(r => r));
++  subscriberRegions.set(username, regions);
++  console.log(`[CONFIG] Subscriber ${username} limited to regions: ${[...regions].join(', ')}`);
++}
++
+ if (subscriberUsers.size === 0) {
+   console.log('[CONFIG] No subscriber users configured');
+ } else {
+@@ -642,6 +659,14 @@ aedes.authorizeForward = (client, packet) => {
+       return null; // Block delivery of this message
+     }
+   }
++
++  // Per-subscriber region allowlist (see SUBSCRIBER_REGIONS_ above)
++  if (clientType === ClientType.SUBSCRIBER && packet.topic.startsWith('meshcore/')) {
++    const regions = subscriberRegions.get((client as any).username);
++    if (regions && !regions.has((packet.topic.split('/')[1] || '').toUpperCase())) {
++      return null; // Region not shared with this subscriber
++    }
++  }
+   
+   // Prevent stale status messages from overwriting newer ones (LWT race condition)
+   if (packet.topic.endsWith('/status') && packet.payload && packet.payload.length > 0) {
