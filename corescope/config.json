@@ -6,7 +6,7 @@
       "username": "corescope",
       "password": "CHANGE_ME_STRONG_PASSWORD",
       "topics": ["meshcore/#"],
-      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "TYR"]
+      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "TYR", "LBB", "MAF"]
     }
   ],
   "defaultRegion": "AUS",
@@ -33,7 +33,9 @@
     "TXK": "Texarkana, TX",
     "TYR": "Tyler-Longview, TX",
     "CRP": "Corpus Christi, TX",
-    "ACT": "Waco, TX"
+    "ACT": "Waco, TX",
+    "LBB": "Lubbock, TX",
+    "MAF": "Midland-Odessa, TX"
   },
   "iataAliases": { "GGG": "TYR" },
   "branding": {
