@@ -6,7 +6,7 @@
       "username": "corescope",
       "password": "CHANGE_ME_STRONG_PASSWORD",
       "topics": ["meshcore/#"],
-      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "TYR", "LBB", "MAF"]
+      "iataFilter": ["SAT", "AUS", "HOU", "DFW", "ELP", "ABI", "AMA", "MFE", "SJT", "TXK", "CRP", "ACT", "TYR", "LBB", "MAF", "DRT", "UVA", "LRD"]
     }
   ],
   "defaultRegion": "AUS",
@@ -35,9 +35,12 @@
     "CRP": "Corpus Christi, TX",
     "ACT": "Waco, TX",
     "LBB": "Lubbock, TX",
-    "MAF": "Midland-Odessa, TX"
+    "MAF": "Midland-Odessa, TX",
+    "DRT": "Del Rio, TX",
+    "UVA": "Uvalde / Winter Garden, TX",
+    "LRD": "Laredo, TX"
   },
-  "iataAliases": { "GGG": "TYR" },
+  "iataAliases": { "GGG": "TYR", "EGP": "UVA" },
   "branding": {
     "siteName": "MeshTexas",
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
