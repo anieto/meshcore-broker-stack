@@ -66,6 +66,7 @@
   },
   "retention": {
     "nodeDays": 14,
-    "packetDays": 60
+    "packetDays": 60,
+    "hopIndexDays": 14
   }
 }
