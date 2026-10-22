@@ -60,6 +60,9 @@
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
     "logoUrl": "https://meshtexas.org/images/meshtexas-logo-wide.png"
   },
+  "webSocket": {
+    "trustedProxies": ["172.18.0.1/32"]
+  },
   "packetStore": {
     "retentionHours": 48,
     "maxMemoryMB": 512
