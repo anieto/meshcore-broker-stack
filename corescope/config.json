@@ -41,6 +41,20 @@
     "LRD": "Laredo, TX"
   },
   "iataAliases": { "GGG": "TYR", "EGP": "UVA" },
+  "regionQuickPicks": [
+    { "name": "Central Texas", "description": "Austin, San Antonio and Waco.", "regions": ["AUS", "SAT", "ACT"] },
+    { "name": "South Texas", "description": "San Antonio down to the border and the coast.", "regions": ["SAT", "CRP", "LRD", "MFE", "UVA", "DRT"] },
+    { "name": "West Texas", "description": "El Paso, the Permian Basin and the Panhandle.", "regions": ["ELP", "MAF", "SJT", "ABI", "LBB", "AMA"] },
+    { "name": "North Texas", "description": "Dallas-Fort Worth, Waco and Texarkana.", "regions": ["DFW", "ACT", "TXK"] },
+    { "name": "East Texas", "description": "Houston, Tyler-Longview and Texarkana.", "regions": ["HOU", "TYR", "TXK"] }
+  ],
+  "rfParams": {
+    "nodesUrl": "https://map.meshcore.io/api/v1/nodes",
+    "presetsUrl": "https://api.meshcore.nz/api/v1/config",
+    "refreshHours": 6,
+    "maxAgeDays": 7,
+    "compareRadiusKm": 50
+  },
   "branding": {
     "siteName": "MeshTexas",
     "tagline": "Real-time MeshCore LoRa mesh network analyzer — Texas",
